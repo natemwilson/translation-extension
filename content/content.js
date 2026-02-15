@@ -268,7 +268,6 @@
   }
 
   function replaceWord(info, translated) {
-    revertActive();
     const { textNode, start, end } = info;
 
     // Split the text node to isolate the word
@@ -310,7 +309,6 @@
   }
 
   function replaceSentence(info, translated) {
-    revertActive();
     const { affected } = info;
 
     // Save original content
@@ -350,32 +348,39 @@
     // Insert span after the first text node
     firstNode.parentNode.insertBefore(span, firstNode.nextSibling);
 
-    // If last node is different from first, add remaining after-text node
-    if (affected.length > 1) {
-      // afterText is already set on last node above
-    } else {
-      // Single node: add after text after span
+    // Track extra nodes we create so revert can remove them
+    const createdNodes = [];
+
+    // If last node is different from first, afterText is already set on last node.
+    // For single node, we need a separate text node for the after-text.
+    if (affected.length === 1 && afterText) {
       const afterNode = document.createTextNode(afterText);
       span.parentNode.insertBefore(afterNode, span.nextSibling);
+      createdNodes.push(afterNode);
     }
 
-    activeReplacement = { type: 'sentence', span, saved };
+    activeReplacement = { type: 'sentence', span, saved, createdNodes };
   }
 
   function revertSentence(r) {
-    const { span, saved } = r;
+    const { span, saved, createdNodes } = r;
     if (!span.parentNode) return;
+
+    // Remove any extra nodes we created
+    for (const n of createdNodes) {
+      if (n.parentNode) n.parentNode.removeChild(n);
+    }
+
+    // Remove the translated span
+    span.parentNode.removeChild(span);
 
     // Restore all saved node contents
     for (const s of saved) {
       s.node.textContent = s.original;
     }
-    span.parentNode.removeChild(span);
 
-    // Clean up any extra text nodes we created
-    if (saved.length === 1) {
-      saved[0].node.parentNode.normalize();
-    }
+    // Normalize to merge adjacent text nodes
+    saved[0].node.parentNode.normalize();
   }
 
   // ─── Modifier Key Tracking ──────────────────────────────────────
@@ -439,14 +444,17 @@
       }
     }
 
+    // Revert BEFORE querying the DOM so we get clean text node references
+    revertActive();
+
     let info, key;
     if (granularity === 'word') {
       info = getWordAtPoint(x, y);
-      if (!info) { revertActive(); currentKey = null; return; }
+      if (!info) { currentKey = null; return; }
       key = `w:${info.textNode.textContent}:${info.start}`;
     } else {
       info = getSentenceAtPoint(x, y);
-      if (!info) { revertActive(); currentKey = null; return; }
+      if (!info) { currentKey = null; return; }
       key = `s:${info.text.substring(0, 60)}`;
     }
 
