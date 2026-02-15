@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h1>Language Learner</h1>
+
+  <div class="field">
+    <label for="sourceLang">Source language</label>
+    <select id="sourceLang"></select>
+  </div>
+
+  <div class="field">
+    <label for="targetLang">Target language</label>
+    <select id="targetLang"></select>
+  </div>
+
+  <fieldset class="field">
+    <legend>Trigger mode</legend>
+    <label class="radio">
+      <input type="radio" name="triggerMode" value="modifier">
+      <span>Modifier + hover <small>(Option=word, Option+Cmd=sentence)</small></span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="triggerMode" value="word-hover">
+      <span>Word hover</span>
+    </label>
+    <label class="radio">
+      <input type="radio" name="triggerMode" value="sentence-hover">
+      <span>Sentence hover</span>
+    </label>
+  </fieldset>
+
+  <div id="status" class="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

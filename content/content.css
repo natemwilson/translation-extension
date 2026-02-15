@@ -1,0 +1,31 @@
+/* Inline translation replacement */
+.ll-translated {
+  border-bottom: 1.5px dotted #999;
+  padding: 0 1px;
+  cursor: default;
+}
+
+/* Activation banner */
+.ll-banner {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 2147483647;
+  background: #1a1a1a;
+  color: #fff;
+  font: 13px/1.4 system-ui, sans-serif;
+  padding: 8px 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  cursor: pointer;
+  opacity: 0.95;
+  transition: opacity 0.2s;
+}
+
+.ll-banner:hover {
+  opacity: 1;
+}
+
+.ll-banner.hidden {
+  display: none;
+}

@@ -1,0 +1,87 @@
+body {
+  width: 280px;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  padding: 12px;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+h1 {
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 10px 8px;
+  margin: 0 0 10px;
+}
+
+legend {
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+.radio {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: normal;
+  margin: 4px 0;
+  cursor: pointer;
+}
+
+.radio input { margin: 0; }
+
+.radio small {
+  color: #666;
+  display: block;
+  margin-left: 20px;
+  font-size: 11px;
+}
+
+.status {
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  display: none;
+}
+
+.status.ok {
+  display: block;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status.warn {
+  display: block;
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status.error {
+  display: block;
+  background: #ffebee;
+  color: #c62828;
+}
